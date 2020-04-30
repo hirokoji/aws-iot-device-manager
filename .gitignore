@@ -1,0 +1,20 @@
+# build
+dist/
+
+npm-debug.log*
+
+# jest coverage output
+coverage/
+
+node_modules/
+.npm
+
+.eslintcache
+
+# macos
+.DS_Store
+
+.idea
+.vscode
+config.json
+devices/*

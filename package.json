@@ -1,0 +1,58 @@
+{
+  "name": "aws-iot-device-manager",
+  "version": "1.0.0",
+  "description": "Library to manage aws iot device easily",
+  "main": "dist/index.js",
+  "preferGlobal": true,
+  "bin": {
+    "cli": "dist/index.js"
+  },
+  "type": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "db/sample.members.json"
+  ],
+  "scripts": {
+    "clean": "rm -rf coverage dist",
+    "lint": "eslint ./src/*.ts",
+    "test": "jest",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [
+    "typescript",
+    "jest",
+    "eslint",
+    "node"
+  ],
+  "dependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "aws-sdk": "^2.666.0"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.6",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.2.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "author": "Hiro Kojima <hirokoji.jp@gmail.com> (https://github.com/hirokoji)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hirokoji/aws-iot-device-manager.git"
+  },
+  "homepage": "https://github.com/hirokoji/aws-iot-device-manager",
+  "bugs": {
+    "url": "https://github.com/hirokoji/aws-iot-device-manager/issues"
+  }
+}
