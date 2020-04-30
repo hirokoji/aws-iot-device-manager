@@ -2,9 +2,11 @@
 
 import { AWSIoTManager } from './awsIoTManager';
 
-const iotManager = new AWSIoTManager('ap-northeast-1');
-const deviceName = 'hkojimaTestDevice';
-const certArn = iotManager.createKeysAndCertificateAsFile(deviceName)
-console.log(certArn);;
+const main = async () => {
+    const iotManager = new AWSIoTManager('ap-northeast-1');
+    const deviceName = 'hkojimaTestDevice';
+    const certArn = await iotManager.createKeysAndCertificateAsFile(deviceName)
+    console.log(certArn);
+}
 
-
+main();
