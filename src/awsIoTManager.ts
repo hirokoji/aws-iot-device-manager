@@ -11,21 +11,44 @@ export class AWSIoTManager { private iot: AWS.Iot;
 
     public async createDevice(deviceName: string) {
 
-        const dirPath = join(__dirname, '..', 'devices', deviceName);
-        const result = await this.createDirectory(dirPath, deviceName);
-        if(result instanceof Error){ return result }
-        const certArn = await this.createKeysAndCertificateAsFile(dirPath, deviceName)
+        /* Under maintenace*/
+        // const certsManagePath = join(__dirname, '..', 'devices', deviceName, 'certs');
+        // const result = await this.createDirectory(deviceName, certsManagePath);
+        // if(result instanceof Error){ return result }
+        //
+        // const certArn = await this.createKeysAndCertificateAsFile(certsManagePath);
+        // console.log('certArn:', certArn);
 
     }
 
-    private async createKeysAndCertificateAsFile(dirPath: string, deviceName: string): Promise<string|Error>{
+    private async createPolicy(deviceName: string) {
+    }
 
-        const privateKeyFilePath =join(dirPath, `${deviceName}.private.key`);
-        const certFilePath = join(dirPath, `${deviceName}.cert.pem`);
-        const publicKeyFilePath = join(dirPath, `${deviceName}.public.key`);
-        const arnFilePath = join(dirPath, `${deviceName}.cert.arn.txt`);
+    public async createThing(deviceName:string): Promise<AWS.Iot.Types.CreateThingResponse>{
+        const response = await this.iot.createThing({thingName: deviceName}).promise();
+        return response;
+    }
+
+    public async createKeysAndCertificateAsFile(deviceName: string, certsPath?: string): Promise<string|Error>{
+        if(certsPath === undefined){
+            certsPath = join(__dirname, '..', 'devices', deviceName, 'certs');
+        }
 
         const response = await this.iot.createKeysAndCertificate({setAsActive: true}).promise();
+        const prefixArn = response?.certificateArn?.split('/')[1].slice(0,10);
+        if(prefixArn === undefined){
+            return new Error(`Couldn't call AWS API properly `);
+        }
+
+        const certPath = join(certsPath, prefixArn);
+        const result = await this.createDirectory(certPath);
+        if(result instanceof Error){ return result }
+
+        const privateKeyFilePath =join(certPath, `${prefixArn}.private.key`);
+        const certFilePath = join(certPath, `${prefixArn}.cert.pem`);
+        const publicKeyFilePath = join(certPath, `${prefixArn}.public.key`);
+        const arnFilePath = join(certPath, `${prefixArn}.cert.arn.txt`);
+
         try {
 
             await Promise.all([
@@ -46,7 +69,7 @@ export class AWSIoTManager { private iot: AWS.Iot;
         }
     }
 
-    private async createDirectory(dirPath: string ,deviceName: string): Promise<boolean|Error> {
+    private async createDirectory(dirPath: string): Promise<boolean|Error> {
         try{
             mkdirSync(dirPath, {recursive: true});
         } catch (err) {
