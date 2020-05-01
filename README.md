@@ -10,28 +10,33 @@ npm install aws-iot-device-manager
 
 ## Usage
 
-You can create device from typescript side.
+
+### 1.1 Create keys and certs for the device
 ```typescript
-import { AWSIoTManager } from 'aws-iot-manager';
+import {AWSIoTManager} from 'aws-iot-device-manager';
 
-const iotManager = new AWSIoTManager();
-const deviceName = 'myFirstDevice';
-iotManager.createDevice(deviceName);
+const main = async () =>{
 
+    const region = 'ap-northeast-1';
+    const manager = new AWSIoTManager(region);
+    const deviceName = 'myDevice'
+    const certArn = await manager.createKeysAndCertificateAsFile(deviceName)
+    console.log(certArn);
+
+}
+
+main();
 ```
 
-IoT device certification and keys will be created under 
-
+IoT device certification and keys will be created below directory.
 
 ```shell script
 
-$ ls devices/myFirstDevice
-
-myFirstDevice.private.key
-myFirstDevice.cert.pem
-myFirstDevice.public.key
-myFirstDevice.cert.arn.txt
-
+$ ls node_modules/aws-iot-device-manager/devices/myDevice/certs/xxxxxxxxxx
+xxxxxxxxxx.cert.arn.txt 
+xxxxxxxxxx.cert.pem     
+xxxxxxxxxx.private.key  
+xxxxxxxxxx.public.key
 ```
 
 
