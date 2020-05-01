@@ -4,8 +4,8 @@ This script help your aws iot device management.
 
 ## Install
 
-I am gonna publish npm if it's completed.
 ```shell script
+npm install aws-iot-device-manager
 ```
 
 ## Usage

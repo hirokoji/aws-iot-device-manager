@@ -1,16 +1,12 @@
 {
   "name": "aws-iot-device-manager",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Library to manage aws iot device easily",
-  "main": "dist/index.js",
   "preferGlobal": true,
-  "bin": {
-    "cli": "dist/index.js"
-  },
+  "main": "dist/index.js",
   "type": "dist/index.d.ts",
   "files": [
-    "dist",
-    "db/sample.members.json"
+    "dist"
   ],
   "scripts": {
     "clean": "rm -rf coverage dist",
